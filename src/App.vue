@@ -1,9 +1,9 @@
 <template>
   <nav>
-    <router-link to="/">First task</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/todos">First task | </router-link>
+    <router-link to="/products"> Third task</router-link>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style lang="scss">
@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 nav {
