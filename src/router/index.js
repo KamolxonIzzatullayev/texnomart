@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AuthView from "../views/AuthView.vue";
 import ProductsView from "../views/ProductView.vue";
 import ProdView from "../views/ProdView.vue";
+import TableView from "../views/TableView.vue";
 
 const routes = [
   {
@@ -28,8 +29,12 @@ const routes = [
     path: '/products/:id',
     name: 'productsById',
     component: ProdView
-  }
-
+  },
+  {
+    path: '/table',
+    name: 'table',
+    component: TableView
+  },
 ]
 
 const router = createRouter({

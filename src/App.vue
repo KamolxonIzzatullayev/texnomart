@@ -1,6 +1,7 @@
 <template>
   <nav>
     <router-link to="/todos">First task | </router-link>
+    <router-link to="/table"> Second task | </router-link>
     <router-link to="/products"> Third task</router-link>
   </nav>
   <router-view />

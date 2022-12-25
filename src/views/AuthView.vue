@@ -57,6 +57,10 @@ export default {
           };
           await axios
             .post("https://dummyjson.com/auth/login", a)
+            .then((res) => {
+              localStorage.setItem("token", res.data.token);
+              this.$router.push("/products");
+            })
             .catch((err) => alert("Invalid credentials"));
         }
       }
