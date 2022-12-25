@@ -1,9 +1,18 @@
 <template>
-  <div class="w-full px-8">
+  <div class="w-full">
+    <div
+      class="nav flex w-full justify-between items-center px-8 py-4 bg-gray-500 text-white"
+    >
+      <h1>{{ user }}</h1>
+      <div class="actions flex items-center justify-between">
+        <router-link class="mr-4" to="/cart">Cart</router-link>
+        <button class="ml-4" @click="logOut">Log out</button>
+      </div>
+    </div>
     <h1 class="text-4xl font-extrabold mt-6 text-left">
       {{ product.title }}
     </h1>
-    <div class="flex my-8 flex-wrap">
+    <div class="flex my-8 flex-wrap px-8">
       <div class="h-[50vh] sm:w-full lg:w-3/5">
         <img class="w-full h-full" :src="product.thumbnail" alt="" />
       </div>
@@ -30,9 +39,14 @@
               <span>{{ product.category }}</span>
             </p>
 
-            <div class="rating text-left mt-3 text-3xl font-medium">
-              <span>Rating: </span>
-              <span>{{ product.rating }}</span>
+            <div
+              class="flex rating items-center text-left mt-3 text-3xl font-medium"
+            >
+              <div class="title mr-3">
+                <span>Rating: </span>
+                <span>{{ product.rating }}</span>
+              </div>
+              <Rating :number="Math.round(product.rating)"></Rating>
             </div>
 
             <button
@@ -69,8 +83,13 @@ export default {
     },
   },
   methods: {
+    logOut() {
+      localStorage.removeItem("username");
+      localStorage.removeItem("cart");
+      this.$router.push("/auth");
+    },
     buyProduct() {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("username");
       if (token) {
         this.isVisible = true;
       } else {
@@ -79,6 +98,13 @@ export default {
     },
   },
   mounted() {
+    if (localStorage.getItem("reloaded")) {
+      localStorage.removeItem("reloaded");
+    } else {
+      localStorage.setItem("reloaded", "1");
+      window.location.reload();
+    }
+
     this.productById.fetchProductById(this.$route.params.id);
   },
 };

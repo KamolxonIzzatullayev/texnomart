@@ -2,10 +2,20 @@
   <nav>
     <router-link to="/todos">First task | </router-link>
     <router-link to="/table"> Second task | </router-link>
-    <router-link to="/products"> Third task</router-link>
+    <router-link :to="user ? '/products' : '/auth'"> Third task</router-link>
   </nav>
   <router-view />
 </template>
+
+<script>
+export default {
+  computed: {
+    user() {
+      return localStorage.getItem("username");
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {

@@ -18,11 +18,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      list: [],
-    };
-  },
   props: {
     number: {
       type: Number,
@@ -30,15 +25,15 @@ export default {
     },
   },
 
-  methods: {
-    getList() {
+  computed: {
+    list() {
+      let a = [];
       for (let index = 0; index < this.number; index++) {
-        this.list.push(1);
+        a.push(1);
       }
+
+      return a;
     },
-  },
-  created() {
-    this.getList();
   },
 };
 </script>

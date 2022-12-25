@@ -1,5 +1,14 @@
 <template>
   <div class="products">
+    <div
+      class="nav flex w-full justify-between items-center px-8 py-4 bg-gray-500 text-white"
+    >
+      <h1>{{ user }}</h1>
+      <div class="actions flex items-center justify-between">
+        <router-link class="mr-4" to="/cart">Cart</router-link>
+        <button class="ml-4" @click="logOut">Log out</button>
+      </div>
+    </div>
     <h1 class="text-2xl">Products</h1>
     <div class="products">
       <ul class="px-8 w-full flex justify-between flex-wrap">
@@ -19,7 +28,9 @@
             <div
               class="product-body text-left px-4 py-4 mt-8 bg-[#6963b9] rounded-2xl"
             >
-              <p class="text-white font-extrabold text-xl whitespace-nowrap overflow-hidden text-ellipsis">
+              <p
+                class="text-white font-extrabold text-xl whitespace-nowrap overflow-hidden text-ellipsis"
+              >
                 <router-link :to="`/products/${product.id}`">{{
                   product.title
                 }}</router-link>
@@ -38,6 +49,7 @@
               >
                 <span class="text-xl">$ {{ product.price }}</span>
                 <button
+                  @click="addToCart(product)"
                   class="text-lg px-[14px] py-[6px] bg-[#413aa0] rounded-full"
                 >
                   +
@@ -61,7 +73,30 @@ export default {
       products: thirdTaskStore(),
     };
   },
+  computed: {
+    user() {
+      return localStorage.getItem("username");
+    },
+  },
+  methods: {
+    logOut() {
+      localStorage.removeItem("username");
+      localStorage.removeItem("cart");
+      this.$router.push("/auth");
+    },
+    addToCart(obj) {
+      this.products.addToCart(obj);
+      alert("Product has been added to the cart successfully !!!")
+    },
+  },
   mounted() {
+    if (localStorage.getItem("reloaded")) {
+      localStorage.removeItem("reloaded");
+    } else {
+      localStorage.setItem("reloaded", "1");
+      window.location.reload();
+    }
+
     this.products.fetchProducts();
   },
   components: { Rating },

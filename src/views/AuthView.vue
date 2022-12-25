@@ -4,14 +4,14 @@
 
     <div class="md:w-1/4 max-md:w-full mx-auto">
       <input
-        class="w-full mt-4 py-4 px-3"
+        class="w-full mt-4 py-4 px-3 border"
         type="text"
         placeholder="Username"
         v-model="login"
       />
       <p v-if="checkLogin" class="text-red-500 mt-4">Username required !!!</p>
       <input
-        class="w-full mt-4 py-4 px-3"
+        class="w-full mt-4 py-4 px-3 border"
         type="password"
         placeholder="Password"
         v-model="password"
@@ -51,17 +51,8 @@ export default {
         if (this.password == "") {
           this.checkPassword = true;
         } else {
-          let a = {
-            login: this.login,
-            password: this.password,
-          };
-          await axios
-            .post("https://dummyjson.com/auth/login", a)
-            .then((res) => {
-              localStorage.setItem("token", res.data.token);
-              this.$router.push("/products");
-            })
-            .catch((err) => alert("Invalid credentials"));
+          localStorage.setItem("username", this.login);
+          this.$router.push('/products')
         }
       }
     },
